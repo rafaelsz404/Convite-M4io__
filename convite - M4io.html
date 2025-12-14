@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convite Especial</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    height: 100vh;
+    background: url("https://i.imgur.com/MFGzphh.jpeg") no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+    position: relative;
+  }
+
+  h1 {
+    font-size: 1.8em;
+    text-shadow: 2px 2px 10px black;
+    margin-bottom: 50px;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  button {
+    padding: 10px 25px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+
+  #sim {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  #nao {
+    background-color: #e74c3c;
+    color: white;
+    transition: left 0.4s ease, top 0.4s ease;
+  }
+
+  .emoji {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    animation: flutuar 6s ease-in-out infinite;
+    z-index: 1;
+  }
+
+  @keyframes flutuar {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-30px) rotate(10deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 1.3em; }
+    button { font-size: 1em; padding: 8px 18px; }
+    .emoji { width: 55px; height: 55px; }
+  }
+</style>
+</head>
+<body>
+
+  <h1>Quer sair comigo hoje, Ana Louise (M4io)? 💌</h1>
+
+  <div class="buttons" id="container-botoes">
+    <button id="sim" onclick="aceitou()">Sim</button>
+    <button id="nao" onmouseover="fugir()">Não</button>
+  </div>
+
+  <!-- Emojis flutuantes -->
+  <img src="https://i.imgur.com/hoqgeju.gif" class="emoji" style="top: 10%; left: 15%;">
+  <img src="https://i.imgur.com/fMzwTQu.gif" class="emoji" style="top: 20%; right: 15%;">
+  <img src="https://i.imgur.com/4VJcvVr.gif" class="emoji" style="bottom: 10%; left: 45%;">
+
+  <script>
+    const nao = document.getElementById('nao');
+    const sim = document.getElementById('sim');
+    let fugindo = false;
+
+    function fugir() {
+      const margem = 100;
+      const maxX = window.innerWidth - nao.offsetWidth - margem;
+      const maxY = window.innerHeight - nao.offsetHeight - margem;
+
+      if (!fugindo) {
+        // Move o botão "Não" para posição absoluta apenas após o primeiro movimento
+        fugindo = true;
+        const rect = nao.getBoundingClientRect();
+        nao.style.position = "fixed";
+        nao.style.left = rect.left + "px";
+        nao.style.top = rect.top + "px";
+      }
+
+      // Gera uma nova posição aleatória suave
+      const novoX = Math.random() * (maxX - margem) + margem / 2;
+      const novoY = Math.random() * (maxY - margem) + margem / 2;
+
+      nao.style.left = novoX + "px";
+      nao.style.top = novoY + "px";
+    }
+
+    function aceitou() {
+      document.body.innerHTML = `
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;text-align:center;">
+          <h1 style="color:white;text-shadow:2px 2px 10px black;font-size:2em;">
+            ☝️🤓 Sabia que você ia aceitar! ☝️🤓
+          </h1>
+        </div>
+      `;
+    }
+
+    // Suporte para toque (mobile)
+    nao.addEventListener('touchstart', fugir);
+  </script>
+
+</body>
+</html>
